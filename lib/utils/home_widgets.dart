@@ -3,8 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_sample_app/controllers/home_controller.dart';
 import 'package:my_sample_app/models/data_model.dart' as model;
@@ -500,9 +498,7 @@ class HomeWidgets {
             TextFormField(
               readOnly: true,
               decoration: InputDecoration(
-                labelText: field.isMandate
-                    ? "${field.fieldName} *"
-                    : field.fieldName,
+                labelText: field.fieldValidationMessage,
                 border: const OutlineInputBorder(),
                 suffixIcon: const Icon(Icons.calendar_today),
               ),
@@ -542,9 +538,7 @@ class HomeWidgets {
             TextFormField(
               readOnly: true,
               decoration: InputDecoration(
-                labelText: field.isMandate
-                    ? "${field.fieldName} *"
-                    : field.fieldName,
+                labelText: field.fieldValidationMessage,
                 border: const OutlineInputBorder(),
                 suffixIcon: const Icon(Icons.access_time),
               ),
