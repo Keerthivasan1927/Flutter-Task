@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 FormModel welcomeFromJson(String str) => FormModel.fromJson(json.decode(str));
 
 String welcomeToJson(FormModel data) => json.encode(data.toJson());
@@ -219,6 +221,7 @@ class FormModel {
 }
 
 class Field {
+  TextEditingController? controller;
   String fieldId;
   String fieldName;
   String fieldType;
@@ -267,6 +270,7 @@ class Field {
   dynamic linkedFieldId;
 
   Field({
+    required this.controller,
     required this.fieldId,
     required this.fieldName,
     required this.fieldType,
@@ -316,6 +320,7 @@ class Field {
   });
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
+    controller: TextEditingController(),
     fieldId: json["FieldID"],
     fieldName: json["FieldName"],
     fieldType: json["FieldType"],

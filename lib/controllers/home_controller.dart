@@ -128,6 +128,11 @@ class HomeController extends ChangeNotifier {
     _visibleFields = _allFields.take(_currentLimit).toList();
 
     _isLoadingMore = false;
+
+    for (var field in form!.fields) {
+      field.fieldValue = null; // reset
+    }
+
     notifyListeners();
   }
 

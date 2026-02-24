@@ -99,7 +99,7 @@ class HomeWidgets {
     }
     // 🔹 TEXTBOX / INPUTBOX
     if (type == "TextBox" || type == "InputBox") {
-      return _buildTextField(field);
+      return _buildTextField(field, context);
     }
 
     //DigitalSign
@@ -113,7 +113,7 @@ class HomeWidgets {
 
     // 🔹 DROPDOWN (LAST)
     if (field.fieldOptions.isNotEmpty) {
-      return _buildDropdown(field);
+      return _buildDropdown(field, context);
     }
     return Offstage();
   }
@@ -235,9 +235,9 @@ class HomeWidgets {
             onChanged: field.isReadOnly
                 ? null
                 : (value) {
-                    field.fieldValue = value; // 🔥 Save Value (e.g., 2235)
+                    field.fieldValue = value;
 
-                    provider.notifyListeners(); // 🔥 Make Reactive
+                    provider.notifyListeners();
                   },
           );
         }).toList(),
@@ -245,13 +245,15 @@ class HomeWidgets {
     );
   }
 
-  static Widget _buildTextField(model.Field field) {
+  static Widget _buildTextField(model.Field field, BuildContext context) {
+    field.controller ??= TextEditingController(text: field.fieldValue ?? '');
     return Column(
       crossAxisAlignment: .start,
       spacing: 10,
       children: [
         _buildFieldTitle(field),
-        TextField(
+        TextFormField(
+          controller: field.controller,
           readOnly: field.isReadOnly,
           maxLength: field.fieldMaxLength != null
               ? int.tryParse(field.fieldMaxLength!)
@@ -260,23 +262,31 @@ class HomeWidgets {
             labelText: field.fieldValidationMessage,
             border: const OutlineInputBorder(),
           ),
+          onChanged: (value) {
+            field.fieldValue = value;
+          },
         ),
       ],
     );
   }
 
-  static Widget _buildDropdown(model.Field field) {
+  static Widget _buildDropdown(model.Field field, BuildContext context) {
+    final provider = Provider.of<HomeController>(context);
+    String? selectedValue = field.fieldValue;
+
+    if (!field.fieldOptions.any((o) => o.value == selectedValue)) {
+      selectedValue = null;
+    }
+
     return Column(
       crossAxisAlignment: .start,
       spacing: 10,
       children: [
         _buildFieldTitle(field),
         DropdownButtonFormField<String>(
+          value: selectedValue,
           isExpanded: true,
-          decoration: InputDecoration(
-            // labelText: field.isMandate ? "${field.fieldName} *" : field.fieldName,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(border: const OutlineInputBorder()),
           items: field.fieldOptions
               .map(
                 (option) => DropdownMenuItem(
@@ -285,7 +295,9 @@ class HomeWidgets {
                 ),
               )
               .toList(),
-          onChanged: field.isReadOnly ? null : (value) {},
+          onChanged: (value) {
+            field.fieldValue = value;
+          },
         ),
       ],
     );
@@ -473,6 +485,7 @@ class HomeWidgets {
       children: [
         _buildFieldTitle(field),
         TextFormField(
+          initialValue: field.fieldValue ?? "",
           minLines: 5,
           maxLines: 8,
           decoration: InputDecoration(
@@ -480,6 +493,9 @@ class HomeWidgets {
             border: const OutlineInputBorder(),
             alignLabelWithHint: true,
           ),
+          onChanged: (value) {
+            field.fieldValue = value;
+          },
         ),
       ],
     );

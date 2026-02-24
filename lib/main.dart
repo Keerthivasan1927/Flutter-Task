@@ -7,10 +7,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LoginController()),
-        ChangeNotifierProvider(create: (_) => HomeController()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => LoginController())],
       child: const MyApp(),
     ),
   );
