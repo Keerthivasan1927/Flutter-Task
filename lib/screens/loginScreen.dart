@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_sample_app/controllers/home_controller.dart';
 import 'package:my_sample_app/controllers/login_controller.dart';
-import 'package:my_sample_app/screens/home_screen.dart';
+import 'package:my_sample_app/screens/dashboard_screen.dart';
 import 'package:my_sample_app/utils/buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class Loginscreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Login Screen'),
           centerTitle: true,
-
           backgroundColor: Colors.white,
         ),
         body: Column(
@@ -42,12 +40,7 @@ class Loginscreen extends StatelessWidget {
                     ? () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => ChangeNotifierProvider(
-                              create: (_) => HomeController(),
-                              child: HomeScreen(),
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (_) => DashboardScreen()),
                         );
                       }
                     : null,
