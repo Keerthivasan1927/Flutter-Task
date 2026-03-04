@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_sample_app/controllers/dashboard_controller.dart';
 import 'package:my_sample_app/controllers/login_controller.dart';
+import 'package:my_sample_app/screens/dashboard_screen.dart';
 import 'package:my_sample_app/screens/loginScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: Loginscreen(),
+      home: DashboardScreen(),
     );
   }
 }

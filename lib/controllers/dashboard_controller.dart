@@ -10,7 +10,6 @@ class DashboardController extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   DashboardController() {
-    print("DashboardController CREATED: ${hashCode}");
     loadDashboard();
   }
 
@@ -60,5 +59,21 @@ class DashboardController extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void swapMenus(int fromIndex, int toIndex) {
+    if (_dashboard == null) return;
+
+    final temp = _dashboard!.menus[fromIndex];
+    _dashboard!.menus[fromIndex] = _dashboard!.menus[toIndex];
+    _dashboard!.menus[toIndex] = temp;
+
+    notifyListeners();
+  }
+
+  void reorderMenus(int fromIndex, int toIndex) {
+    final item = dashboard!.menus.removeAt(fromIndex);
+    dashboard!.menus.insert(toIndex, item);
+    notifyListeners();
   }
 }

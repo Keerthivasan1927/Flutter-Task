@@ -182,7 +182,6 @@ class HomeWidgets {
             Row(
               children: List.generate(5, (index) {
                 int starIndex = index + 1;
-
                 return IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
@@ -218,12 +217,10 @@ class HomeWidgets {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Field Title
         _buildFieldTitle(field),
 
         const SizedBox(height: 8),
 
-        /// Radio Options
         ...field.fieldOptions.map((option) {
           return RadioListTile<String>(
             title: Text(option.text),
@@ -576,7 +573,6 @@ class HomeWidgets {
     );
   }
 
-  // 🔹 Submit Button
   static Widget submitButton({
     required String title,
     required VoidCallback onPressed,
